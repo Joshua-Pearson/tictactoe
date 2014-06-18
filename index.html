@@ -9,6 +9,7 @@
   <body ng-app="TicApp" ng-controller="TicCtrl" ng-cloak>
     <h1> Tic Tac Toe </h1>
     <h2 ng-show="winner"> Player {{currentPlayer.playerNumber}} Wins!</h2>
+    <h2 ng-show="draw"> Nobody wins. Draw!</h2>
     <div ng-repeat="square in squares track by $index">
       <div class="square" ng-click="move()" ng-class="isPlayed">
         {{this.square}}
