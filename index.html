@@ -7,12 +7,12 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body ng-app="TicApp" ng-controller="TicCtrl" ng-cloak>
-    {{this}}
+    <h1> Tic Tac Toe </h1>
+    <h2 ng-show="winner"> Player {{currentPlayer.playerNumber}} Wins!</h2>
     <div ng-repeat="square in squares track by $index">
       <div class="square" ng-click="move()" ng-class="isPlayed">
         {{this.square}}
       </div>
     </div>
-    <button ng-hide="something" ng-click="newGame()">New Game</button>
   </body>
 </html>

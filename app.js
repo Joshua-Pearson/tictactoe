@@ -2,8 +2,12 @@ var app = angular.module("TicApp", []);
 
 app.controller("TicCtrl", ["$scope", 
   function($scope) {
-
-    $scope.squares = ["-","-","-","-","-","-","-","-","-"];
+    $scope.squares = ["","","","","","","","",""];
+    var winningArrays = [
+      [0,1,2], [0,3,6], [0,4,8],
+      [1,4,7], [2,5,8], [3,4,5],
+      [6,7,8], [2,4,6]
+    ];
 
     function Player(playerNumber, value) {
       this.playerNumber = playerNumber;
@@ -17,41 +21,40 @@ app.controller("TicCtrl", ["$scope",
     var turnCount = 1;
     $scope.currentPlayer = playerOne;
     $scope.isPlayed = false;
+    $scope.winner = false;
 
     $scope.move = function() {
       if (turnCount < 10 && this.isPlayed == false && turnCount % 2 !== 0) {
         turnCount ++;
-        console.log(this.$index)
         this.isPlayed = true;
         this.square = $scope.currentPlayer.value;
-        playerOne.squares.push(this.$index);
+        $scope.currentPlayer.squares.push(this.$index);
+        checkForWin();
         $scope.currentPlayer = playerTwo;
-        console.log($scope.currentPlayer);
       } else if (turnCount < 9 && this.isPlayed == false && turnCount % 2 === 0) {
         turnCount ++;
         this.isPlayed = true;
-        console.log(this.$index)
         this.square = $scope.currentPlayer.value;
-        playerTwo.squares.push(this.$index);
-        console.log(playerTwo.squares.indexOf)
+        $scope.currentPlayer.squares.push(this.$index);
+        checkForWin();
         $scope.currentPlayer = playerOne;
       } else {
         console.log("Illegal Move");
+        console.log(this);
+        console.log(this.isPlayed);
       }
-      checkForWin();
     };
 
     var checkForWin = function() {
-      // if (playerOne.squares
-    };
-
-    $scope.newGame = function() {
-      playerOne.squares = [];
-      playerTwo.squares = [];
-      turnCount = 1;
-      $scope.currentPlayer = playerOne;
-      $scope.isPlayed = false;  
-      $scope.squares = ["-","-","-","-","-","-","-","-","-"];    
+      console.log($scope.currentPlayer.squares)
+      for (var i = 0; i < winningArrays.length; i++) {
+        if (_.intersection($scope.currentPlayer.squares, winningArrays[i]).length === 3) {
+          $scope.winner = true;
+          console.log($scope.currentPlayer);
+          console.log($scope.squares)
+          this.isPlayed = true;
+        }
+      }
     };
   }
 ]);
