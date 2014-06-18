@@ -26,6 +26,9 @@ app.controller("TicCtrl", ["$scope",
     var turnCount = 1;
 
     $scope.move = function() {
+      if ($scope.winner == true) {
+        return alert("game over")
+      }  
       if (turnCount < 10 && this.isPlayed == false) {
         if (turnCount % 2 !== 0) {
           $scope.currentPlayer = playerOne;
